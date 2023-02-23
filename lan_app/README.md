@@ -1,10 +1,9 @@
 # lan app 
 Script for run shared dhcp internet connection 
-1. First off all edit /etc/dhcp/dhcpd.conf  
+1. install dhcp server
 ```
-sudo nano /etc/dhcp/dhcpd.conf
+sudo apt install isc-dhcp-server
 ```
-[example my setup](dhcpd.conf)  
 2. Run script <inet_port> to <share_dhcp_port>
 ```
 :~/sh_scripts/lan_app$ ./lan_app_mode wlp0s20f3 enp0s31f6 enable
@@ -13,17 +12,40 @@ sudo nano /etc/dhcp/dhcpd.conf
 + action=enable
 + net_base=192.168.1
 + sudo iptables --flush
-[sudo] password for rustam: 
 + sudo ip a f enp0s31f6
-+ sudo sysctl -w net.ipv4.ip_forward=1
-net.ipv4.ip_forward = 1
++ nmcli device show wlp0s20f3
++ grep DNS
++ grep -E -o ([0-9]{1,3}\.){3}[0-9]{1,3}
++ var=192.168.50.1
++ echo DNS from wifi  192.168.50.1
+DNS from wifi  192.168.50.1
++ sudo echo ddns-update-style none;
+
+authoritative;
+
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.100 192.168.1.180;
+  option domain-name-servers 192.168.50.1;
+  option subnet-mask 255.255.255.0;
+  option routers 192.168.1.1;
+  option broadcast-address 192.168.1.255;
+  default-lease-time 6000;
+  max-lease-time 7200;
+}
++ echo config writed
+config writed
++ sudo cp new_dhcp_conf.conf /etc/dhcp/dhcpd.conf
 + sudo ip l s enp0s31f6 up
 + sudo ip a a 192.168.1.1/24 dev enp0s31f6 brd +
++ sudo iptables -A FORWARD -o wlp0s20f3 -i enp0s31f6 -s 192.168.1.0/24 -m conntrack --ctstate NEW -j ACCEPT
++ sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
++ sudo iptables -t nat -F POSTROUTING
 + sudo iptables -t nat -A POSTROUTING -o wlp0s20f3 -j MASQUERADE
 + sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE
 + sudo sysctl -w net.ipv4.ip_forward=1
 net.ipv4.ip_forward = 1
 + sudo systemctl restart isc-dhcp-server.service
+
 ```
 for check status:
 ```
@@ -50,16 +72,8 @@ for check status:
 фев 18 21:24:37 nb-ubuntu-02 dhcpd[9274]: Server starting service.
 
 ```
-3. Set client side interface config
-```
-:~ $ cat /etc/network/interfaces
-# interfaces(5) file used by ifup(8) and ifdown(8)
-auto lo
-iface lo inet loopback
-auto eth0
-iface eth0 inet dhcp
-```
-4. For disable just run 
+
+3. For disable just run 
 ```
 :~/sh_scripts/lan_app$ ./lan_app_mode wlp0s20f3 enp0s31f6 disable
 + wwan_nic=wlp0s20f3
