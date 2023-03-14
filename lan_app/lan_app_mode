@@ -18,12 +18,12 @@ echo "ddns-update-style none;
 
 authoritative;
 
-subnet 192.168.1.0 netmask 255.255.255.0 {
-  range 192.168.1.100 192.168.1.180;
+subnet "${net_base}.0" netmask 255.255.255.0 {
+  range "${net_base}.100" "${net_base}.180";
   option domain-name-servers ${var};
   option subnet-mask 255.255.255.0;
-  option routers 192.168.1.1;
-  option broadcast-address 192.168.1.255;
+  option routers "${net_base}.1";
+  option broadcast-address "${net_base}.255";
   default-lease-time 6000;
   max-lease-time 7200;
 }" | sudo tee new_dhcp_conf.conf
