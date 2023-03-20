@@ -15,7 +15,7 @@ cd folder docker_usb
 ```
 docker build -t vh_image . 
 ```
-after building just run deamon -itd
+after building just run daemon -itd
 ```
 docker run --rm -itd --network="demo-macvlan" --ip=192.168.1.110 --privileged -v /dev/bus/usb:/dev/bus/usb --name vh_container vh_image
 ```
