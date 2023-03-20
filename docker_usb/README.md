@@ -1,6 +1,16 @@
 # USB to Docker
 Util for running n servers in rpi util https://www.virtualhere.com/usb_server_software
+
 ## RPI part
+Setup --network="demo-macvlan" 
+```
+docker network create -d macvlan \
+    --subnet=192.168.1.0/24 \
+    --gateway=192.168.1.1  \
+    -o parent=eth0 \
+     demo-macvlan
+```
+
 cd folder docker_usb
 ```
 docker build -t vh_image . 
