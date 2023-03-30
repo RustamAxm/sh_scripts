@@ -21,7 +21,8 @@ sending commands to master dhcpcd process
 ```
 <details>
   <summary>ip a show</summary>
-```
+  
+  ```
 pi@raspberrypi:~ $ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -51,6 +52,7 @@ pi@raspberrypi:~ $ ip a
        valid_lft forever preferred_lft forever
 ```
 </details>
+
 for down 
 ```
 pi@raspberrypi:~ $ ./my-bridge.sh down 
@@ -64,8 +66,10 @@ After run container
 ```
 docker run --rm -itd --network="my-dhcp-net" --privileged -v /dev/bus/usb:/dev/bus/usb --name vh_container_1  vh_image
 ```
-docker network inspect
-```
+<details>
+  <summary>docker network inspect</summary>
+  
+  ```
 pi@raspberrypi:~ $ docker network inspect my-dhcp-net 
 [
     {
@@ -113,32 +117,36 @@ pi@raspberrypi:~ $ docker network inspect my-dhcp-net
         "Labels": {}
     }
 ]
+```  
+</details>
+<details>
+  <summary>dhcp server log</summary>
 
-```
-dhcp server log
-```
-● isc-dhcp-server.service - ISC DHCP IPv4 server
-     Loaded: loaded (/lib/systemd/system/isc-dhcp-server.service; enabled; vendor preset: enabled)
-     Active: active (running) since Thu 2023-03-30 16:49:07 MSK; 29min ago
-       Docs: man:dhcpd(8)
-   Main PID: 20993 (dhcpd)
-      Tasks: 4 (limit: 18725)
-     Memory: 4.5M
-     CGroup: /system.slice/isc-dhcp-server.service
-             └─20993 dhcpd -user dhcpd -group dhcpd -f -4 -pf /run/dhcp-server/dhcpd.pid -cf /etc/dhcp/dhcpd.conf enp0s31f6
+  ```
+  ● isc-dhcp-server.service - ISC DHCP IPv4 server
+       Loaded: loaded (/lib/systemd/system/isc-dhcp-server.service; enabled; vendor preset: enabled)
+       Active: active (running) since Thu 2023-03-30 16:49:07 MSK; 29min ago
+         Docs: man:dhcpd(8)
+     Main PID: 20993 (dhcpd)
+        Tasks: 4 (limit: 18725)
+       Memory: 4.5M
+       CGroup: /system.slice/isc-dhcp-server.service
+               └─20993 dhcpd -user dhcpd -group dhcpd -f -4 -pf /run/dhcp-server/dhcpd.pid -cf /etc/dhcp/dhcpd.conf enp0s31f6
 
-мар 30 17:13:20 nb-ubuntu-02 dhcpd[20993]: DHCPACK on 192.168.1.147 to 26:9f:27:8c:af:a2 (03a039ecb8c8) via enp0s31f6
-мар 30 17:15:55 nb-ubuntu-02 dhcpd[20993]: DHCPRELEASE of 192.168.1.147 from 26:9f:27:8c:af:a2 (03a039ecb8c8) via enp0s31f6 (found)
-мар 30 17:18:31 nb-ubuntu-02 dhcpd[20993]: DHCPDISCOVER from ba:be:b1:15:f7:90 via enp0s31f6
-мар 30 17:18:32 nb-ubuntu-02 dhcpd[20993]: DHCPOFFER on 192.168.1.148 to ba:be:b1:15:f7:90 via enp0s31f6
-мар 30 17:18:32 nb-ubuntu-02 dhcpd[20993]: DHCPREQUEST for 192.168.1.148 (192.168.1.1) from ba:be:b1:15:f7:90 via enp0s31f6
-мар 30 17:18:32 nb-ubuntu-02 dhcpd[20993]: DHCPACK on 192.168.1.148 to ba:be:b1:15:f7:90 via enp0s31f6
-мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPDISCOVER from ba:be:b1:15:f7:90 via enp0s31f6
-мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPOFFER on 192.168.1.148 to ba:be:b1:15:f7:90 (7bdf1bc087c6) via enp0s31f6
-мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPREQUEST for 192.168.1.148 (192.168.1.1) from ba:be:b1:15:f7:90 (7bdf1bc087c6) via enp0s31f6
-мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPACK on 192.168.1.148 to ba:be:b1:15:f7:90 (7bdf1bc087c6) via enp0s31f6
+  мар 30 17:13:20 nb-ubuntu-02 dhcpd[20993]: DHCPACK on 192.168.1.147 to 26:9f:27:8c:af:a2 (03a039ecb8c8) via enp0s31f6
+  мар 30 17:15:55 nb-ubuntu-02 dhcpd[20993]: DHCPRELEASE of 192.168.1.147 from 26:9f:27:8c:af:a2 (03a039ecb8c8) via enp0s31f6 (found)
+  мар 30 17:18:31 nb-ubuntu-02 dhcpd[20993]: DHCPDISCOVER from ba:be:b1:15:f7:90 via enp0s31f6
+  мар 30 17:18:32 nb-ubuntu-02 dhcpd[20993]: DHCPOFFER on 192.168.1.148 to ba:be:b1:15:f7:90 via enp0s31f6
+  мар 30 17:18:32 nb-ubuntu-02 dhcpd[20993]: DHCPREQUEST for 192.168.1.148 (192.168.1.1) from ba:be:b1:15:f7:90 via enp0s31f6
+  мар 30 17:18:32 nb-ubuntu-02 dhcpd[20993]: DHCPACK on 192.168.1.148 to ba:be:b1:15:f7:90 via enp0s31f6
+  мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPDISCOVER from ba:be:b1:15:f7:90 via enp0s31f6
+  мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPOFFER on 192.168.1.148 to ba:be:b1:15:f7:90 (7bdf1bc087c6) via enp0s31f6
+  мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPREQUEST for 192.168.1.148 (192.168.1.1) from ba:be:b1:15:f7:90 (7bdf1bc087c6) via enp0s31f6
+  мар 30 17:18:34 nb-ubuntu-02 dhcpd[20993]: DHCPACK on 192.168.1.148 to ba:be:b1:15:f7:90 (7bdf1bc087c6) via enp0s31f6
 
-```
+  ```
+</details>
+
 ### Macvlan if set ip
 Setup --network="demo-macvlan" 
 ```
