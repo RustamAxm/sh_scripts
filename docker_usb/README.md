@@ -5,6 +5,61 @@ Util for running n servers in rpi util [virtualhere](https://www.virtualhere.com
 ### dhcp 
 cool repo [docker-net-dhcp](https://github.com/devplayer0/docker-net-dhcp)
 
+Run [sh script](my-bridge.sh) for up bridge network 
+```
+pi@raspberrypi:~ $ ./my-bridge.sh up 
++ action=up
++ lan_nic=eth0
++ name=my-bridge
++ sudo ip link add my-bridge type bridge
++ sudo ip link set my-bridge up
++ sudo ip link set eth0 up
++ sudo ip link set eth0 master my-bridge
++ sudo iptables -A FORWARD -i my-bridge -j ACCEPT
++ sudo dhcpcd my-bridge
+sending commands to master dhcpcd process
+```
+<details>
+  <summary>ip a show</summary>
+```
+pi@raspberrypi:~ $ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master my-bridge state UP group default qlen 1000
+    link/ether b8:27:eb:75:fe:40 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.100/24 brd 192.168.1.255 scope global dynamic noprefixroute eth0
+       valid_lft 5666sec preferred_lft 4957sec
+    inet6 fe80::2589:dc7d:e9d3:8bb8/64 scope link 
+       valid_lft forever preferred_lft forever
+3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether b8:27:eb:20:ab:15 brd ff:ff:ff:ff:ff:ff
+    inet 10.77.47.49/23 brd 10.77.47.255 scope global dynamic noprefixroute wlan0
+       valid_lft 7198sec preferred_lft 6298sec
+    inet6 fe80::53b7:a021:3e05:b31b/64 scope link 
+       valid_lft forever preferred_lft forever
+4: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    link/ether 02:42:c8:1c:cd:36 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+10: my-bridge: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:27:eb:75:fe:40 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::c4df:36ff:fe4e:4b97/64 scope link 
+       valid_lft forever preferred_lft forever
+```
+</details>
+for down 
+```
+pi@raspberrypi:~ $ ./my-bridge.sh down 
++ action=down
++ lan_nic=eth0
++ name=my-bridge
++ sudo iptables -D FORWARD -i my-bridge -j ACCEPT
++ sudo ip link delete my-bridge type bridge
+```
 After run container 
 ```
 docker run --rm -itd --network="my-dhcp-net" --privileged -v /dev/bus/usb:/dev/bus/usb --name vh_container_1  vh_image
