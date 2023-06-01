@@ -21,6 +21,7 @@ usbip list -p -l
 ```
 <details>
   <summary>commands </summary>
+  
   ```
   pi@raspberrypi:~ $ lsusb -tv
   /:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=dwc2/1p, 480M
@@ -47,6 +48,7 @@ sudo usbipd
 ```
 <details>
   <summary>sudo usbipd </summary>
+  
   ```
   pi@raspberrypi:~ $ sudo usbipd
   usbipd: info: starting usbipd (usbip-utils 2.0)
@@ -68,6 +70,7 @@ sudo usbip attach -r 10.77.47.49 -b 1-1.3
 ```
 <details>
   <summary>lsusb -tv </summary>
+  
   ```
   rustam@nb-ubuntu-02:~/sh_scripts/docker_usb$ lsusb -tv
   /:  Bus 06.Port 1: Dev 1, Class=root_hub, Driver=vhci_hcd/8p, 5000M
