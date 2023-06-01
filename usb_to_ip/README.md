@@ -55,7 +55,7 @@ usbipd: info: listening on 0.0.0.0:3240
 usbipd: info: listening on :::3240
 
 ```
-<details>
+</details>
 
 ## Client ubuntu
 
@@ -79,4 +79,4 @@ rustam@nb-ubuntu-02:~/sh_scripts/docker_usb$ lsusb -tv
     |__ Port 1: Dev 2, If 0, Class=Vendor Specific Class, Driver=i2c-ch341-usb, 12M
         ID 1a86:5512 QinHeng Electronics CH341 in EPP/MEM/I2C mode, EPP/I2C adapter
 ```
-<details>
+</details>
