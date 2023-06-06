@@ -81,3 +81,28 @@ sudo usbip attach -r 10.77.47.49 -b 1-1.3
           ID 1a86:5512 QinHeng Electronics CH341 in EPP/MEM/I2C mode, EPP/I2C adapter
   ```
 </details>
+
+## Client Win 10
+repo for daemon https://github.com/dorssel/usbipd-win
+install daemon from https://github.com/dorssel/usbipd-win/releases/tag/v3.0.0
+
+repo for client  https://github.com/barbalion/usbip-win-client
+```
+C:\Users\r.akhmadullin\Downloads\usbip-win-client>usbip.exe install
+usbip: info: vhci(ude) driver installed successfully
+
+C:\Users\r.akhmadullin\Downloads\usbip-win-client>usbip.exe list -r 10.77.46.209
+Intel Corp.
+Exportable USB devices
+======================
+ - 10.77.46.209
+      1-1.3: STMicroelectronics : ST-LINK/V2 (0483:3748)
+           : /sys/devices/platform/scb/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb1/1-1/1-1.3
+           : (Defined at Interface level) (00/00/00)
+           :  0 - Vendor Specific Class / Vendor Specific Subclass / Vendor Specific Protocol (ff/ff/ff)
+
+C:\Users\r.akhmadullin\Downloads\usbip-win-client>usbip.exe attach -r 10.77.46.209 -b 1-1.3
+succesfully attached to port 0
+```
+
+
