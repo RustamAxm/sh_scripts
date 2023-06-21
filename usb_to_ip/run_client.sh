@@ -8,8 +8,8 @@ attach)
 
 sudo modprobe usbip_host
 sudo usbip list -p -r $ip
-sudo usbip attach -r $ip -b 1-1.3
-sudo usbip attach -r $ip -b 1-1.1.2
+#sudo usbip attach -r $ip -b 1-1.3
+sudo usbip attach -r $ip -b 1-1.1
 sudo usbip port
 ;;
 detach)
