@@ -17,7 +17,7 @@ docker build -t can_to_docker .
 ```
 run container in host network with name test_can1
 ```bash
-docker build -t can_to_docker --network host .
+docker run -it --rm --network host --name test_can1 can_to_docker
 ```
 ip a in container
 <details> 
