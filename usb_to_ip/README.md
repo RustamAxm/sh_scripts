@@ -66,6 +66,7 @@ sudo apt install linux-tools-5.19.0-42-generic
 
 run client 
 ```
+sudo modprobe vhci-hcd
 sudo usbip attach -r 10.77.47.49 -b 1-1.3
 ```
 <details>

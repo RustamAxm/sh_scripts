@@ -6,6 +6,7 @@ ip=${2:-10.77.47.49}
 case "$action" in
 attach)
 
+sudo modprobe vhci-hcd
 sudo modprobe usbip_host
 sudo usbip list -p -r $ip
 #sudo usbip attach -r $ip -b 1-1.3

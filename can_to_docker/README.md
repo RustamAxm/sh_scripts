@@ -30,3 +30,4 @@ ip a in container
   16: can1: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP group default qlen 10
     link/can 
   ```
+</details> 
