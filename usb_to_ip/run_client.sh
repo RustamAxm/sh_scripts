@@ -1,7 +1,7 @@
 #!/bin/sh -ex
 
 action=${1:-attach}
-ip=${2:-10.77.47.49}
+ip=${2:-10.77.46.175}
 
 case "$action" in
 attach)
@@ -10,7 +10,7 @@ sudo modprobe vhci-hcd
 sudo modprobe usbip_host
 sudo usbip list -p -r $ip
 #sudo usbip attach -r $ip -b 1-1.3
-sudo usbip attach -r $ip -b 1-1.1
+sudo usbip attach -r $ip -b 1-8
 sudo usbip port
 ;;
 detach)
