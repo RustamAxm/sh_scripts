@@ -27,9 +27,30 @@ subnet "${net_base}.0" netmask 255.255.255.0 {
   default-lease-time 6000;
   max-lease-time 7200;
 }" | sudo tee new_dhcp_conf.conf
+echo "# Defaults for isc-dhcp-server (sourced by /etc/init.d/isc-dhcp-server)
+
+# Path to dhcpd's config file (default: /etc/dhcp/dhcpd.conf).
+#DHCPDv4_CONF=/etc/dhcp/dhcpd.conf
+#DHCPDv6_CONF=/etc/dhcp/dhcpd6.conf
+
+# Path to dhcpd's PID file (default: /var/run/dhcpd.pid).
+#DHCPDv4_PID=/var/run/dhcpd.pid
+#DHCPDv6_PID=/var/run/dhcpd6.pid
+
+# Additional options to start dhcpd with.
+#	Don't use options -cf or -pf here; use DHCPD_CONF/ DHCPD_PID instead
+#OPTIONS=""
+
+# On what interfaces should the DHCP server (dhcpd) serve DHCP requests?
+#	Separate multiple interfaces with spaces, e.g. "eth0 eth1".
+INTERFACESv4="${lan_nic}"
+INTERFACESv6=\"\"
+" | sudo tee new_isc-dhcp-server
+
+
     echo "config writed"
     sudo cp new_dhcp_conf.conf /etc/dhcp/dhcpd.conf
-
+    sudo cp new_isc-dhcp-server /etc/default/isc-dhcp-server
 
     sudo ip l s "$lan_nic" up
     sudo ip a a "${net_base}.1/24" dev "$lan_nic" brd + ||:
