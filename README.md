@@ -89,4 +89,11 @@ N: Download is performed unsandboxed as root as file '/home/rustam/sh_scripts/my
 rustam@rustam-zenbook:~/sh_scripts$ my-package-deb 
 demo string from package
 
+``
+check deps 
 ```
+rustam@rustam-zenbook:~/sh_scripts$ apt-cache depends my-package-deb
+my-package-deb
+  Depends: libzmq3-dev
+  Depends: python3-pip
+````
