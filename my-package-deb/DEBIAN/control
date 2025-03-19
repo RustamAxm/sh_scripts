@@ -1,0 +1,10 @@
+Package: my-package-deb
+Version: 1.0.0
+Section: unknown
+Priority: optional
+Depends: libzmq3-dev, python3-pip
+Architecture: amd64
+Essential: no
+Installed-Size: 20
+Maintainer: Akhmadullin Rustam <rustamaxm@gamil.com>
+Description: Demo for cretae deb packages
